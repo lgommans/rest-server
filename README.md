@@ -77,7 +77,7 @@ openssl req -newkey rsa:2048 -x509 -keyout private_key -out public_key -days 365
 
 Omit the `IP:127.0.0.1` if you don't need your server be accessed via SSH Tunnels. No need to change default values in the openssl dialog, hitting enter every time is sufficient. To access this server via restic use `--cacert public_key`, meaning with a self-signed certificate you have to distribute your `public_key` file to every restic client.
 
-The `--append-only` mode allows creation of new backups but prevents deletion and modification of existing backups. This can be useful when backing up systems that have a potential of being hacked.
+The `--append-only` mode allows creation of new backups but prevents deletion and modification of existing backups. This can be useful when backing up systems that have a potential of being hacked. Note that running `restic forget` in an append-only repository introduces security risks as documented in the [restic documentation on forgetting snapshots](https://restic.readthedocs.io/en/latest/060_forget.html).  <!-- TODO link subsection once it exists -->
 
 To prevent your users from accessing each others' repositories, you may use the `--private-repos` flag which grants access only when a subdirectory with the same name as the user is specified in the repository URL. For example, user "foo" using the repository URLs `rest:https://foo:pass@host:8000/foo` or `rest:https://foo:pass@host:8000/foo/` would be granted access, but the same user using repository URLs `rest:https://foo:pass@host:8000/` or `rest:https://foo:pass@host:8000/foobar/` would be denied access. Users can also create their own subrepositories, like `/foo/bar/`.
 
